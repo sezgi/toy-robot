@@ -5,3 +5,20 @@
   text-align: center;
   font-size: 2rem;
 }
+
+.board {
+  display: grid;
+  border: 1px solid black;
+}
+
+.cell {
+  border: 1px solid black;
+}
+
+.robot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 1px;
+}
