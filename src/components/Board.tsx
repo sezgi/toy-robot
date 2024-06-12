@@ -1,7 +1,7 @@
 /**
  * Board component
  * Notes:
- * - robotPosition is 1-indexed because of CSS grid
+ * - position is 1-indexed because of CSS grid
  * - initially, robot is off the board
  * - onPlace callback is called when a cell is clicked
  */
@@ -13,7 +13,9 @@ interface BoardProps {
   rows: number;
   cols: number;
   isRobotPlaced: boolean;
-  robotPosition: { row: number; col: number };
+  position: { row: number; col: number };
+  angle?: number;
+  doAnimate?: boolean;
   onPlace: (row: number, col: number) => void;
 }
 
@@ -21,7 +23,9 @@ const Board: FC<BoardProps> = ({
   rows,
   cols,
   isRobotPlaced,
-  robotPosition,
+  position,
+  angle,
+  doAnimate,
   onPlace,
 }) => {
   return (
@@ -49,7 +53,12 @@ const Board: FC<BoardProps> = ({
             ))
         )}
       {isRobotPlaced ? (
-        <Robot row={robotPosition.row} col={robotPosition.col} />
+        <Robot
+          row={position.row}
+          col={position.col}
+          angle={angle}
+          doAnimate={doAnimate}
+        />
       ) : null}
     </div>
   );
