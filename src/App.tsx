@@ -57,14 +57,7 @@ export default function App() {
 
   return (
     <div className="container">
-      <div className="report">
-        {showReport ? (
-          <>
-            {ROWS - position.row}, {position.col - 1},{" "}
-            {DIRECTION_MAP[direction]}
-          </>
-        ) : null}
-      </div>
+      <h1>Toy Robot Simulator</h1>
       <Board
         rows={ROWS}
         cols={COLS}
@@ -90,6 +83,14 @@ export default function App() {
           </div>
         )}
       </div>
+      <p className="report">
+        {showReport ? (
+          <>
+            {ROWS - position.row}, {position.col - 1},{" "}
+            {DIRECTION_MAP[direction]}
+          </>
+        ) : null}
+      </p>
     </div>
   );
 }
