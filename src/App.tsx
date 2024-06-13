@@ -29,6 +29,7 @@ export default function App() {
         setDirection(Direction.North);
         setAngleCount(0);
         setDoAnimate(false); // prevent rotation animation
+        setShowReport(false);
       }
     },
     [isRobotPlaced]
