@@ -28,7 +28,7 @@ const Robot: FC<RobotProps> = ({
         transition: doAnimate ? "transform ease-in-out 0.25s" : "none",
       }}
     >
-      BOT
+      🤖
     </div>
   );
 };

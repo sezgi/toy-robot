@@ -102,10 +102,12 @@ export default function App() {
       />
       <div className="controls">
         {!isRobotPlaced && (
-          <>
-            <button onClick={() => setIsRobotPlaced(true)}>Place me!</button>
-            <Robot />
-          </>
+          <button
+            className="place-button"
+            onClick={() => setIsRobotPlaced(true)}
+          >
+            <Robot /> Place me!
+          </button>
         )}
         {isRobotPlaced && (
           <div className="buttons">

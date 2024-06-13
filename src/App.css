@@ -44,6 +44,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 3rem;
 }
 
 .controls {
@@ -51,6 +52,19 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+}
+
+.place-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.place-button .robot {
+  font-size: 2rem;
 }
 
 .buttons {
