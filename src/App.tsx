@@ -1,5 +1,7 @@
 /**
- * Toy Robot Simulator
+ * Toy Robot Simulator:
+ * Use buttons or keyboard controls to move and rotate
+ * a robot on a grid, and report its position and direction.
  */
 
 import { useCallback, useEffect, useState } from "react";
@@ -18,6 +20,8 @@ export default function App() {
   const [showReport, setShowReport] = useState(false);
   const dirIndex = DIRECTIONS.indexOf(direction);
 
+  // When a cell is clicked, place the robot
+  // on that cell facing north.
   const handlePlace = useCallback(
     (row: number, col: number) => {
       if (isRobotPlaced) {
@@ -30,6 +34,9 @@ export default function App() {
     [isRobotPlaced]
   );
 
+  // When the left or right buttons are clicked,
+  // rotate the robot 90 degrees in the corresponding direction.
+  // `angleCount` is used to prevent reverse animation after 360 degrees.
   const handleRotate = useCallback(
     (reverse = false) => {
       const newDirIndex = reverse ? (dirIndex + 3) % 4 : (dirIndex + 1) % 4;
@@ -41,6 +48,8 @@ export default function App() {
     [dirIndex, angleCount]
   );
 
+  // When the move button is clicked,
+  // move the robot forward in the current direction.
   const handleMove = useCallback(() => {
     const { row, col } = position;
     const newPosition: Position[] = [
@@ -53,6 +62,7 @@ export default function App() {
     setShowReport(false);
   }, [position, dirIndex]);
 
+  // Listen for keyboard events to control the robot.
   const handleKeyUp = useCallback(
     (event: KeyboardEvent) => {
       if (isRobotPlaced) {

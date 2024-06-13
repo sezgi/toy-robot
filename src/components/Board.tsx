@@ -1,11 +1,11 @@
 /**
  * Board component
  * Notes:
- * - position is 1-indexed because of CSS grid
- * - initially, robot is off the board
- * - angle prop allows rotation
- * - doAnimate prop prevents rotation while placing
- * - onPlace callback is called when a cell is clicked
+ * - Position is 1-indexed because of CSS grid
+ * - Initially, robot is off the board
+ * - `angle` prop allows rotation
+ * - `doAnimate` prop prevents rotation animation while placing robot
+ * - `onPlace` callback is called when a cell is clicked
  */
 
 import { FC, memo } from "react";

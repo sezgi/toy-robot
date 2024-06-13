@@ -2,6 +2,8 @@
  * Robot component
  * Notes:
  * - Position is 1-indexed because of CSS grid
+ * - `angle` prop allows rotation
+ * - `doAnimate` prop prevents rotation animation while placing robot
  */
 
 import { FC, memo } from "react";
