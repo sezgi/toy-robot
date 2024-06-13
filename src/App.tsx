@@ -86,6 +86,11 @@ export default function App() {
   return (
     <div className="container">
       <h1>Toy Robot Simulator</h1>
+      {showReport && (
+        <p className="report">
+          {position.col - 1}, {ROWS - position.row}, {DIRECTION_MAP[direction]}
+        </p>
+      )}
       <Board
         rows={ROWS}
         cols={COLS}
@@ -111,12 +116,6 @@ export default function App() {
           </div>
         )}
       </div>
-      {showReport && (
-        <p>
-          {position.col - 1}, {ROWS - position.row}, {DIRECTION_MAP[direction]}
-        </p>
-      )}
-
       <div className="key">
         <ul>
           <li>&lt;&gt;: rotate</li>
