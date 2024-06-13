@@ -2,7 +2,7 @@
  * Toy Robot Simulator
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Robot from "./components/Robot";
 import Board from "./components/Board";
 import "./App.css";
@@ -25,6 +25,34 @@ export default function App() {
   const [doAnimate, setDoAnimate] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const dirIndex = DIRECTIONS.indexOf(direction);
+
+  useEffect(() => {
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (isRobotPlaced) {
+        switch (event.key) {
+          case "ArrowLeft":
+            handleRotate(true);
+            break;
+          case "ArrowRight":
+            handleRotate();
+            break;
+          case "m":
+            handleMove();
+            break;
+          case "r":
+            setShowReport(true);
+            break;
+          default:
+            break;
+        }
+      } else if (event.key === "p") {
+        setIsRobotPlaced(true);
+      }
+    };
+
+    document.addEventListener("keyup", handleKeyUp);
+    return () => document.removeEventListener("keyup", handleKeyUp);
+  }, [isRobotPlaced, direction, position]);
 
   const handlePlace = (row: number, col: number) => {
     if (isRobotPlaced) {
@@ -83,14 +111,20 @@ export default function App() {
           </div>
         )}
       </div>
-      <p className="report">
-        {showReport ? (
-          <>
-            {ROWS - position.row}, {position.col - 1},{" "}
-            {DIRECTION_MAP[direction]}
-          </>
-        ) : null}
-      </p>
+      {showReport && (
+        <p>
+          {position.col - 1}, {ROWS - position.row}, {DIRECTION_MAP[direction]}
+        </p>
+      )}
+
+      <div className="key">
+        <ul>
+          <li>&lt;&gt;: rotate</li>
+          <li>m: move</li>
+          <li>p: place</li>
+          <li>r: report</li>
+        </ul>
+      </div>
     </div>
   );
 }
