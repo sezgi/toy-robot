@@ -2,32 +2,59 @@
  * Toy Robot Simulator
  */
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Robot from "./components/Robot";
 import Board from "./components/Board";
+import { Direction, Position } from "./types";
+import { COLS, DIRECTION_MAP, DIRECTIONS, ROWS } from "./constants";
 import "./App.css";
-
-const ROWS = 5;
-const COLS = 5;
-const DIRECTIONS = ["N", "E", "S", "W"];
-const DIRECTION_MAP: { [key: string]: string } = {
-  N: "North",
-  E: "East",
-  S: "South",
-  W: "West",
-};
 
 export default function App() {
   const [isRobotPlaced, setIsRobotPlaced] = useState(false);
-  const [position, setPosition] = useState({ row: ROWS, col: 1 });
-  const [direction, setDirection] = useState("N");
+  const [position, setPosition] = useState<Position>({ row: ROWS, col: 1 });
+  const [direction, setDirection] = useState<Direction>(Direction.North);
   const [angleCount, setAngleCount] = useState(0);
   const [doAnimate, setDoAnimate] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const dirIndex = DIRECTIONS.indexOf(direction);
 
-  useEffect(() => {
-    const handleKeyUp = (event: KeyboardEvent) => {
+  const handlePlace = useCallback(
+    (row: number, col: number) => {
+      if (isRobotPlaced) {
+        setPosition({ row, col });
+        setDirection(Direction.North);
+        setAngleCount(0);
+        setDoAnimate(false); // prevent rotation animation
+      }
+    },
+    [isRobotPlaced]
+  );
+
+  const handleRotate = useCallback(
+    (reverse = false) => {
+      const newDirIndex = reverse ? (dirIndex + 3) % 4 : (dirIndex + 1) % 4;
+      setDirection(DIRECTIONS[newDirIndex]);
+      setAngleCount((angleCount) => angleCount + (reverse ? -1 : 1));
+      setDoAnimate(true);
+      setShowReport(false);
+    },
+    [dirIndex, angleCount]
+  );
+
+  const handleMove = useCallback(() => {
+    const { row, col } = position;
+    const newPosition: Position[] = [
+      { row: Math.max(row - 1, 1), col },
+      { row, col: Math.min(col + 1, COLS) },
+      { row: Math.min(row + 1, ROWS), col },
+      { row, col: Math.max(col - 1, 1) },
+    ];
+    setPosition(newPosition[dirIndex]);
+    setShowReport(false);
+  }, [position, dirIndex]);
+
+  const handleKeyUp = useCallback(
+    (event: KeyboardEvent) => {
       if (isRobotPlaced) {
         switch (event.key) {
           case "ArrowLeft":
@@ -48,40 +75,14 @@ export default function App() {
       } else if (event.key === "p") {
         setIsRobotPlaced(true);
       }
-    };
+    },
+    [isRobotPlaced, handleRotate, handleMove]
+  );
 
+  useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
     return () => document.removeEventListener("keyup", handleKeyUp);
-  }, [isRobotPlaced, direction, position]);
-
-  const handlePlace = (row: number, col: number) => {
-    if (isRobotPlaced) {
-      setPosition({ row, col });
-      setDirection("N");
-      setAngleCount(0);
-      setDoAnimate(false); // prevent rotation animation
-    }
-  };
-
-  const handleRotate = (reverse = false) => {
-    const newDirIndex = reverse ? (dirIndex + 3) % 4 : (dirIndex + 1) % 4;
-    setDirection(DIRECTIONS[newDirIndex]);
-    setAngleCount((angleCount) => angleCount + (reverse ? -1 : 1));
-    setDoAnimate(true);
-    setShowReport(false);
-  };
-
-  const handleMove = () => {
-    const { row, col } = position;
-    const positionArr = [
-      { row: Math.max(row - 1, 1), col },
-      { row, col: Math.min(col + 1, COLS) },
-      { row: Math.min(row + 1, ROWS), col },
-      { row, col: Math.max(col - 1, 1) },
-    ];
-    setPosition(positionArr[dirIndex]);
-    setShowReport(false);
-  };
+  }, [handleKeyUp]);
 
   return (
     <div className="container">

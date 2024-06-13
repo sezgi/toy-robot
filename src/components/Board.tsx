@@ -6,14 +6,15 @@
  * - onPlace callback is called when a cell is clicked
  */
 
-import { FC } from "react";
+import { FC, memo } from "react";
 import Robot from "./Robot";
+import { Position } from "../types";
 
 interface BoardProps {
   rows: number;
   cols: number;
   isRobotPlaced: boolean;
-  position: { row: number; col: number };
+  position: Position;
   angle?: number;
   doAnimate?: boolean;
   onPlace: (row: number, col: number) => void;
@@ -53,16 +54,16 @@ const Board: FC<BoardProps> = ({
               ></button>
             ))
         )}
-      {isRobotPlaced ? (
+      {isRobotPlaced && (
         <Robot
           row={position.row}
           col={position.col}
           angle={angle}
           doAnimate={doAnimate}
         />
-      ) : null}
+      )}
     </div>
   );
 };
 
-export default Board;
+export default memo(Board);

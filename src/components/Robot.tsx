@@ -4,7 +4,7 @@
  * - Position is 1-indexed because of CSS grid
  */
 
-import { FC } from "react";
+import { FC, memo } from "react";
 
 interface RobotProps {
   row?: number;
@@ -33,4 +33,4 @@ const Robot: FC<RobotProps> = ({
   );
 };
 
-export default Robot;
+export default memo(Robot);
