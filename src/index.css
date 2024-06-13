@@ -57,6 +57,10 @@ button:active {
   transform: scale(0.98);
   opacity: 0.8;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

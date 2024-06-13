@@ -10,6 +10,12 @@ import "./App.css";
 const ROWS = 5;
 const COLS = 5;
 const DIRECTIONS = ["N", "E", "S", "W"];
+const DIRECTION_MAP: { [key: string]: string } = {
+  N: "North",
+  E: "East",
+  S: "South",
+  W: "West",
+};
 
 export default function App() {
   const [isRobotPlaced, setIsRobotPlaced] = useState(false);
@@ -17,6 +23,7 @@ export default function App() {
   const [direction, setDirection] = useState("N");
   const [angleCount, setAngleCount] = useState(0);
   const [doAnimate, setDoAnimate] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const dirIndex = DIRECTIONS.indexOf(direction);
 
   const handlePlace = (row: number, col: number) => {
@@ -33,6 +40,7 @@ export default function App() {
     setDirection(DIRECTIONS[newDirIndex]);
     setAngleCount((angleCount) => angleCount + (reverse ? -1 : 1));
     setDoAnimate(true);
+    setShowReport(false);
   };
 
   const handleMove = () => {
@@ -44,10 +52,19 @@ export default function App() {
       { row, col: Math.max(col - 1, 1) },
     ];
     setPosition(positionArr[dirIndex]);
+    setShowReport(false);
   };
 
   return (
     <div className="container">
+      <div className="report">
+        {showReport ? (
+          <>
+            {ROWS - position.row}, {position.col - 1},{" "}
+            {DIRECTION_MAP[direction]}
+          </>
+        ) : null}
+      </div>
       <Board
         rows={ROWS}
         cols={COLS}
@@ -60,8 +77,8 @@ export default function App() {
       <div className="controls">
         {!isRobotPlaced && (
           <>
+            <button onClick={() => setIsRobotPlaced(true)}>Place me!</button>
             <Robot />
-            <button onClick={() => setIsRobotPlaced(true)}>Place</button>
           </>
         )}
         {isRobotPlaced && (
@@ -69,6 +86,7 @@ export default function App() {
             <button onClick={() => handleRotate(true)}>Left</button>
             <button onClick={() => handleRotate()}>Right</button>
             <button onClick={handleMove}>Move</button>
+            <button onClick={() => setShowReport(true)}>Report</button>
           </div>
         )}
       </div>

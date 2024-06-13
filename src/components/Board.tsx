@@ -45,6 +45,7 @@ const Board: FC<BoardProps> = ({
               <button
                 key={`${i}-${j}`}
                 className="cell"
+                disabled={!isRobotPlaced}
                 style={{
                   gridArea: `${i + 1} / ${j + 1} / span 1 / span 1`,
                 }}
