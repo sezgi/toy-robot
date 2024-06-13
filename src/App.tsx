@@ -99,6 +99,7 @@ export default function App() {
       <h1>Toy Robot Simulator</h1>
       {showReport && (
         <p className="report">
+          {/* convert css grid position to coords of 0, 0 at bottom left */}
           {position.col - 1}, {ROWS - position.row}, {DIRECTION_MAP[direction]}
         </p>
       )}
