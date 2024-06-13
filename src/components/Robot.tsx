@@ -27,6 +27,7 @@ const Robot: FC<RobotProps> = ({
         transform: `rotate(${angle}deg)`,
         transition: doAnimate ? "transform ease-in-out 0.25s" : "none",
       }}
+      data-testid="robot"
     >
       🤖
     </div>
