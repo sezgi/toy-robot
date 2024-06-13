@@ -17,26 +17,37 @@ export default function App() {
   const [direction, setDirection] = useState("N");
   const [angleCount, setAngleCount] = useState(0);
   const [doAnimate, setDoAnimate] = useState(false);
+  const dirIndex = DIRECTIONS.indexOf(direction);
 
   const handlePlace = (row: number, col: number) => {
     if (isRobotPlaced) {
       setPosition({ row, col });
       setDirection("N");
       setAngleCount(0);
-      setDoAnimate(false);
+      setDoAnimate(false); // prevent rotation animation
     }
   };
 
   const handleRotate = (reverse = false) => {
-    const dirIndex = DIRECTIONS.indexOf(direction);
     const newDirIndex = reverse ? (dirIndex + 3) % 4 : (dirIndex + 1) % 4;
     setDirection(DIRECTIONS[newDirIndex]);
     setAngleCount((angleCount) => angleCount + (reverse ? -1 : 1));
     setDoAnimate(true);
   };
 
+  const handleMove = () => {
+    const { row, col } = position;
+    const positionArr = [
+      { row: Math.max(row - 1, 1), col },
+      { row, col: Math.min(col + 1, COLS) },
+      { row: Math.min(row + 1, ROWS), col },
+      { row, col: Math.max(col - 1, 1) },
+    ];
+    setPosition(positionArr[dirIndex]);
+  };
+
   return (
-    <div>
+    <div className="container">
       <Board
         rows={ROWS}
         cols={COLS}
@@ -54,10 +65,11 @@ export default function App() {
           </>
         )}
         {isRobotPlaced && (
-          <>
+          <div className="buttons">
             <button onClick={() => handleRotate(true)}>Left</button>
             <button onClick={() => handleRotate()}>Right</button>
-          </>
+            <button onClick={handleMove}>Move</button>
+          </div>
         )}
       </div>
     </div>

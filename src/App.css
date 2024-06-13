@@ -6,17 +6,35 @@
   font-size: 2rem;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
 .board {
   display: grid;
-  border: 1px solid black;
+  gap: 0.1rem;
 }
 
 .cell {
   border: 1px solid black;
+  border-radius: 0;
+}
+
+.cell:hover {
+  background-color: #f0f0f0;
+  border-width: 2px;
 }
 
 .robot {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }

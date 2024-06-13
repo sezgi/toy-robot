@@ -25,7 +25,7 @@ const Robot: FC<RobotProps> = ({
       style={{
         gridArea: `${row} / ${col} / span 1 / span 1`,
         transform: `rotate(${angle}deg)`,
-        transition: doAnimate ? "all ease-in-out 0.25s" : "none",
+        transition: doAnimate ? "transform ease-in-out 0.25s" : "none",
       }}
     >
       BOT

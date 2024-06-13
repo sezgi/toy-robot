@@ -42,14 +42,14 @@ const Board: FC<BoardProps> = ({
           Array(cols)
             .fill(null)
             .map((_, j) => (
-              <div
+              <button
                 key={`${i}-${j}`}
                 className="cell"
                 style={{
                   gridArea: `${i + 1} / ${j + 1} / span 1 / span 1`,
                 }}
                 onClick={() => onPlace(i + 1, j + 1)}
-              ></div>
+              ></button>
             ))
         )}
       {isRobotPlaced ? (
